@@ -3,7 +3,7 @@ console.log("welcome");
 // DOM
 let songIndex = 0;
 let progress;
-let audioElement = new Audio("songsList/0.mp3");
+let audioElement = new Audio("songList/0.mp3");
 let masterPlay = document.getElementById("masterPlay");
 let myProgressBar = document.getElementById("myProgressBar");
 let masterSongName = document.getElementById("masterSongName");
@@ -14,77 +14,61 @@ let songItem;
 // Songs : Name, Song, cover
 let songs = [
   {
-    songName: "Khaab - Akhil",
-    filePath: "songsList/0.mp3",
-    coverPath: "coversList/10.jpg",
+    songName: "Arjun Velly - Gurdarsha Dhuri",
+    filePath: "songList/0.mp3",
+    coverPath: "coverList/0.jpg",
   },
 
   {
-    songName: "Nira Ishq - Guri",
-    filePath: "songsList/12.m4a",
-    coverPath: "coversList/5.jpg",
+    songName: "Satranga - Arijit Singh",
+    filePath: "songList/1.mp3",
+    coverPath: "coverList/1.jpg",
   },
   {
-    songName: "lehenga - Jass Manak",
-    filePath: "songsList/13.m4a",
-    coverPath: "coversList/0.png",
+    songName: "Phir Aur Kya Chahiye -Amitabh ",
+    filePath: "songList/2.mp3",
+    coverPath: "coverList/2.jpg",
   },
   {
-    songName: "Sayad",
-    filePath: "songsList/11.mp3",
-    coverPath: "coversList/4.jpg",
+    songName: "Sooraj Hi Chhaon Banke - Menuka",
+    filePath: "songList/3.mp3",
+    coverPath: "coverList/3.jpg",
   },
   {
-    songName: "Kinna sona",
-    filePath: "songsList/1.mp3",
-    coverPath: "coversList/1.jpg",
+    songName: "Badass - Anirudh Ravichander",
+    filePath: "songList/4.mp3",
+    coverPath: "coverList/4.jpg",
   },
   {
-    songName: "Tu Jo Mili - HinaKhan",
-    filePath: "songsList/2.mp3",
-    coverPath: "coversList/2.jpg",
+    songName: "Ordinary Man - Anirudh ",
+    filePath: "songList/5.mp3",
+    coverPath: "coverList/5.jpg",
   },
   {
-    songName: "Tu Laung Main Elaachi",
-    filePath: "songsList/3.mp3",
-    coverPath: "coversList/3.jpg",
+    songName: "I'm Scared - Anirudh",
+    filePath: "songList/6.mp3",
+    coverPath: "coverList/6.jpg",
   },
   {
-    songName: "Photo - Luka chuppi",
-    filePath: "songsList/4.mp3",
-    coverPath: "coversList/4.jpg",
+    songName: "Dil Galti Kar Baitha - Jubin",
+    filePath: "songList/7.mp3",
+    coverPath: "coverList/7.jpg",
   },
 
   {
-    songName: "Duniaa - Luka chuppi",
-    filePath: "songsList/5.mp3",
-    coverPath: "coversList/5.jpg",
+    songName: "Guilty - Karan Aujla",
+    filePath: "songList/8.mp3",
+    coverPath: "coverList/8.jpg",
   },
   {
-    songName: "Mummy nu pasnd nai tu",
-    filePath: "songsList/6.mp3",
-    coverPath: "coversList/6.jpg",
+    songName: "Leke Prabhu Ka Naam - Tiger 3",
+    filePath: "songList/9.mp3",
+    coverPath: "coverList/9.jpg",
   },
   {
     songName: "Ranjha",
-    filePath: "songsList/7.mp3",
-    coverPath: "coversList/7.jpg",
-  },
-
-  {
-    songName: "Rataan Lambiaa",
-    filePath: "songsList/8.mp3",
-    coverPath: "coversList/8.jpg",
-  },
-  {
-    songName: "Sakhiyaan 2.0",
-    filePath: "songsList/9.mp3",
-    coverPath: "coversList/9.jpg",
-  },
-  {
-    songName: "Saaho - Bad Boy",
-    filePath: "songsList/10.mp3",
-    coverPath: "coversList/0.png",
+    filePath: "songList/10.mp3",
+    coverPath: "coverList/10.jpg",
   },
 ];
 
