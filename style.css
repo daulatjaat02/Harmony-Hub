@@ -57,7 +57,10 @@ nav {
 
   text-align: center;
 }
-
+.brand {
+  font-size: 0.8em;
+  padding: 0 19px;
+}
 .container {
   color: white;
 
