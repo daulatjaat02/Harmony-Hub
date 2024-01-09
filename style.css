@@ -8,18 +8,19 @@
 body {
   background: linear-gradient(
     to right,
-    #1e5799 0%,
-    #a91aeb 19%,
-    #2cdddd 40%,
-    #0300bd 60%,
-    #e02cbf 83%,
-    #1e5799 100%
+    #0075fc 0%,
+    #ae00ff 15%,
+    #0075fc 30%,
+    #ae00ff 45%,
+    #0076fd 60%,
+    #ae00ff 75%,
+    #0075fc 100%
   );
   background-size: 10000px 100%;
   /* animation: bg 10s linear infinite; */
 }
 body.playing {
-  animation: bg 5s linear infinite;
+  animation: bg 6s linear infinite;
 }
 
 @keyframes bg {
