@@ -79,6 +79,16 @@ function initialize() {
     element.getElementsByClassName("songNametitle")[0].innerText =
       songs[i].songName;
   });
+  masterSongName.innerText = songs[0].songName;
+  audioElement.addEventListener("loadedmetadata", function () {
+    const durationMinutes = Math.floor(audioElement.duration / 60);
+    const durationSeconds = Math.floor(audioElement.duration % 60);
+    document.getElementById("duration").innerText =
+      durationMinutes +
+      ":" +
+      (durationSeconds < 10 ? "0" : "") +
+      durationSeconds;
+  });
 }
 
 initialize();
@@ -121,7 +131,7 @@ function updateMasterPlayButton() {
 masterPlay.addEventListener("click", () => {
   if (audioElement.paused || audioElement.currentTime <= 0) {
     masterSongName.innerText = songs[songIndex].songName;
-    masterPlay.setAttribute("title", "Pause");
+    masterPlay.setAttribute("title", "Pause(space)");
   } else {
     masterPlay.setAttribute("title", "Play");
   }
@@ -142,12 +152,41 @@ audioElement.addEventListener("timeupdate", () => {
     ":" +
     (currentTimeSeconds < 10 ? "0" : "") +
     currentTimeSeconds;
+
+  // Update the total duration display
+  if (!isNaN(audioElement.duration)) {
+    const durationMinutes = Math.floor(audioElement.duration / 60);
+    const durationSeconds = Math.floor(audioElement.duration % 60);
+    document.getElementById("duration").innerText =
+      durationMinutes +
+      ":" +
+      (durationSeconds < 10 ? "0" : "") +
+      durationSeconds;
+  }
+
   updateSongItemPlayButtonState(songIndex);
 });
 
+// ... (your existing code)
+
 myProgressBar.addEventListener("input", () => {
-  audioElement.currentTime =
-    (myProgressBar.value * audioElement.duration) / 100;
+  // Calculate the new currentTime based on the progress bar value
+  const newTime = (myProgressBar.value * audioElement.duration) / 100;
+
+  // Update the audio currentTime
+  audioElement.currentTime = newTime;
+
+  // Update the current time display
+  const currentTimeMinutes = Math.floor(newTime / 60);
+  const currentTimeSeconds = Math.floor(newTime % 60);
+  document.getElementById("current-time").innerText =
+    currentTimeMinutes +
+    ":" +
+    (currentTimeSeconds < 10 ? "0" : "") +
+    currentTimeSeconds;
+
+  // Update the songItemPlay button state
+  updateSongItemPlayButtonState(songIndex);
 });
 
 // songItemPlay button for the current song
@@ -228,4 +267,35 @@ function skipForward() {
 document.getElementById("previousSec").addEventListener("click", skipBackward);
 document.getElementById("nextSec").addEventListener("click", skipForward);
 
-// // ////////////////////////////////////////////////////////////////////
+// Keyboard event listener
+document.addEventListener("keydown", (event) => {
+  if (event.code === "Space") {
+    event.preventDefault(); // Prevent the default behavior (scrolling down)
+    updateMasterPlayButton();
+    updateSongItemPlayButtonState(songIndex);
+
+    if (audioElement.paused || audioElement.currentTime <= 0) {
+      masterSongName.innerText = songs[songIndex].songName;
+      masterPlay.setAttribute("title", "Pause(space)");
+    } else {
+      masterPlay.setAttribute("title", "Play(space)");
+    }
+  } else if (event.code === "ArrowRight") {
+    nextSong();
+  } else if (event.code === "ArrowLeft") {
+    let prevIndex = songIndex;
+    songIndex = (songIndex - 1 + songs.length) % songs.length;
+    audioElement.src = songs[songIndex].filePath;
+    audioElement.play();
+    masterSongName.innerText = songs[songIndex].songName;
+    updateMasterPlayFB();
+    updateSongItemPlayButtonState(songIndex);
+    updateSongItemPlayButtonState(prevIndex);
+  } else if (event.code === "ArrowUp") {
+    audioElement.volume = Math.min(1, audioElement.volume + 0.1);
+  } else if (event.code === "ArrowDown") {
+    audioElement.volume = Math.max(0, audioElement.volume - 0.1);
+  }
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
