@@ -37,6 +37,9 @@ i {
   color: #ff38a2;
   cursor: pointer;
 }
+i:hover {
+  color: #b13b7a;
+}
 nav {
   /* background-color: rgb(255, 128, 128); */
   background: linear-gradient(
@@ -73,9 +76,9 @@ nav {
 }
 
 .cover {
-  width: 8%;
-  margin: 0 23px;
-  border-radius: 34px;
+  width: 10%;
+  margin: 0 19px;
+  border-radius: 50%;
 }
 
 .songItemContainer {
@@ -103,10 +106,6 @@ nav {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.songItem > span > span > i {
-  cursor: pointer;
 }
 
 .Bottom {

@@ -66,19 +66,23 @@ let songs = [
     coverPath: "coverList/9.jpg",
   },
   {
-    songName: "Ranjha",
+    songName: "Jhoome Jo Pathaan - Pathaan",
     filePath: "songList/10.mp3",
     coverPath: "coverList/10.jpg",
   },
 ];
 
+// Initial data
 function initialize() {
   songItem = Array.from(document.getElementsByClassName("songItem"));
+
+  // load the cover and name of the songs
   songItem.forEach((element, i) => {
     element.getElementsByTagName("img")[0].src = songs[i].coverPath;
     element.getElementsByClassName("songNametitle")[0].innerText =
       songs[i].songName;
   });
+  // load the total lenth of the current song at the beginning
   masterSongName.innerText = songs[0].songName;
   audioElement.addEventListener("loadedmetadata", function () {
     const durationMinutes = Math.floor(audioElement.duration / 60);
@@ -93,7 +97,7 @@ function initialize() {
 
 initialize();
 
-// The songItemPlay
+// Update the songItemPlay button
 function updateSongItemPlayButtonState(index) {
   const songItemPlayButtons = document.querySelectorAll(".songItemplay");
   const currentButton = songItemPlayButtons[index];
@@ -123,7 +127,7 @@ function updateMasterPlayButton() {
     audioElement.pause();
     masterPlay.classList.remove("fa-circle-pause");
     masterPlay.classList.add("fa-circle-play");
-    document.body.classList.remove("playing"); // Add 'playing' class to body
+    document.body.classList.remove("playing");
   }
 }
 
@@ -167,26 +171,10 @@ audioElement.addEventListener("timeupdate", () => {
   updateSongItemPlayButtonState(songIndex);
 });
 
-// ... (your existing code)
-
 myProgressBar.addEventListener("input", () => {
-  // Calculate the new currentTime based on the progress bar value
   const newTime = (myProgressBar.value * audioElement.duration) / 100;
-
-  // Update the audio currentTime
   audioElement.currentTime = newTime;
-
-  // Update the current time display
-  const currentTimeMinutes = Math.floor(newTime / 60);
-  const currentTimeSeconds = Math.floor(newTime % 60);
-  document.getElementById("current-time").innerText =
-    currentTimeMinutes +
-    ":" +
-    (currentTimeSeconds < 10 ? "0" : "") +
-    currentTimeSeconds;
-
-  // Update the songItemPlay button state
-  updateSongItemPlayButtonState(songIndex);
+  // updateSongItemPlayButtonState(songIndex);
 });
 
 // songItemPlay button for the current song
@@ -228,7 +216,7 @@ let updateMasterPlayFB = function () {
 };
 
 // next and previous buttons
-previous.addEventListener("click", () => {
+let previousSong = () => {
   let prevIndex = songIndex;
   songIndex = (songIndex - 1 + songs.length) % songs.length;
   audioElement.src = songs[songIndex].filePath;
@@ -237,7 +225,9 @@ previous.addEventListener("click", () => {
   updateMasterPlayFB();
   updateSongItemPlayButtonState(songIndex);
   updateSongItemPlayButtonState(prevIndex); // Update the previous song's button
-});
+};
+
+previous.addEventListener("click", previousSong);
 
 let nextSong = () => {
   let prevIndex = songIndex;
@@ -283,14 +273,7 @@ document.addEventListener("keydown", (event) => {
   } else if (event.code === "ArrowRight") {
     nextSong();
   } else if (event.code === "ArrowLeft") {
-    let prevIndex = songIndex;
-    songIndex = (songIndex - 1 + songs.length) % songs.length;
-    audioElement.src = songs[songIndex].filePath;
-    audioElement.play();
-    masterSongName.innerText = songs[songIndex].songName;
-    updateMasterPlayFB();
-    updateSongItemPlayButtonState(songIndex);
-    updateSongItemPlayButtonState(prevIndex);
+    previousSong();
   } else if (event.code === "ArrowUp") {
     audioElement.volume = Math.min(1, audioElement.volume + 0.1);
   } else if (event.code === "ArrowDown") {
