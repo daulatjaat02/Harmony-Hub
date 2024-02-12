@@ -9,6 +9,9 @@ let myProgressBar = document.getElementById("myProgressBar");
 let masterSongName = document.getElementById("masterSongName");
 let next = document.getElementById("next");
 let previous = document.getElementById("previous");
+const volumeProgress = document.getElementById("volumeProgress");
+const muteIcon = document.getElementById("mute");
+
 let songItem;
 
 // Songs : Name, Song, cover
@@ -212,7 +215,7 @@ songItem.forEach((element, i) => {
 let updateMasterPlayFB = function () {
   masterPlay.classList.remove("fa-circle-play");
   masterPlay.classList.add("fa-circle-pause");
-  document.body.classList.add("playing"); // Add 'playing' class to body
+  // document.body.classList.add("playing"); // Add 'playing' class to body
 };
 
 // next and previous buttons
@@ -274,11 +277,72 @@ document.addEventListener("keydown", (event) => {
     nextSong();
   } else if (event.code === "ArrowLeft") {
     previousSong();
-  } else if (event.code === "ArrowUp") {
-    audioElement.volume = Math.min(1, audioElement.volume + 0.1);
-  } else if (event.code === "ArrowDown") {
-    audioElement.volume = Math.max(0, audioElement.volume - 0.1);
   }
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Volume Control
+function toggleMute() {
+  if (volumeProgress.value == 0) {
+    volumeProgress.value = 100;
+  } else {
+    volumeProgress.value = 0;
+  }
+  updateVolumeIcon();
+  updateAudioVolume();
+}
+
+function increaseVolume() {
+  volumeProgress.value = Math.min(100, parseInt(volumeProgress.value) + 10);
+  updateVolumeIcon();
+  updateAudioVolume();
+}
+
+function decreaseVolume() {
+  volumeProgress.value = Math.max(0, parseInt(volumeProgress.value) - 10);
+  updateVolumeIcon();
+  updateAudioVolume();
+}
+
+function updateVolume() {
+  updateVolumeIcon();
+  updateAudioVolume();
+}
+
+function updateVolumeIcon() {
+  if (volumeProgress.value == 0) {
+    muteIcon.classList.remove("fa-volume-up", "fa-volume-down");
+    muteIcon.classList.add("fa-volume-mute");
+  } else if (volumeProgress.value < 66) {
+    muteIcon.classList.remove("fa-volume-mute", "fa-volume-up");
+    muteIcon.classList.add("fa-volume-down");
+  } else {
+    muteIcon.classList.remove("fa-volume-mute", "fa-volume-down");
+    muteIcon.classList.add("fa-volume-up");
+  }
+}
+
+function updateAudioVolume() {
+  audioElement.volume = volumeProgress.value / 100;
+}
+
+muteIcon.addEventListener("click", function (event) {
+  event.preventDefault();
+  toggleMute();
+});
+
+volumeProgress.addEventListener("input", function (event) {
+  event.preventDefault();
+  updateVolume();
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.code === "ArrowUp") {
+    event.preventDefault();
+    increaseVolume();
+  } else if (event.code === "ArrowDown") {
+    event.preventDefault();
+    decreaseVolume();
+  }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
